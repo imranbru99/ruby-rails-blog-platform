@@ -1,0 +1,32 @@
+<%= form_with model: [:admin, category], class: "form form-stack" do |f| %>
+  <% if category.errors.any? %>
+    <div class="form-errors" role="alert">
+      <p style="margin-top: 0; font-weight: 600;">Please fix <%= pluralize(category.errors.count, "error") %> before saving:</p>
+      <ul style="margin-bottom: 0; padding-left: 1.2rem;">
+        <% category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Category Name" %>
+    <%= f.text_field :name, required: true, placeholder: "e.g. Architecture" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :slug, "URL Slug (opens at /category/slug)" %>
+    <%= f.text_field :slug, placeholder: "auto-generated-from-name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, "Category Overview / Lede" %>
+    <%= f.text_area :description, rows: 4, placeholder: "What topics and themes belong in this shelf?..." %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit (category.persisted? ? "Save Category" : "Create Category"), class: "btn btn-accent" %>
+    <%= link_to "Cancel", admin_categories_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

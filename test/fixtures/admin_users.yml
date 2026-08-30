@@ -1,0 +1,3 @@
+admin:
+  email: admin@meridian.test
+  password_digest: <%= BCrypt::Password.create("admin12345", cost: 4) %>

@@ -1,0 +1,15 @@
+<% content_for :title, "Edit post · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Content</p>
+    <h1>Edit post</h1>
+  </div>
+  <% if @post.published? %>
+    <%= link_to "View live", post_path(@post), class: "btn btn-ghost", target: "_blank", rel: "noopener" %>
+  <% end %>
+</div>
+
+<section class="admin-panel">
+  <%= render "form", post: @post %>
+</section>

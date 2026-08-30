@@ -1,0 +1,78 @@
+<% content_for :title, "Dashboard · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow"><span class="eyebrow-pill">Overview</span></p>
+    <h1 style="margin: 0;">Editorial Dashboard</h1>
+  </div>
+  <div style="display: flex; gap: 0.8rem;">
+    <%= link_to "+ New Category", new_admin_category_path, class: "btn btn-ghost" %>
+    <%= link_to "+ Write Post", new_admin_post_path, class: "btn btn-accent" %>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <article class="stat-card">
+    <p>Published Posts</p>
+    <strong style="color: var(--live);"><%= @published_count %></strong>
+  </article>
+  <article class="stat-card">
+    <p>Drafts</p>
+    <strong style="color: var(--draft);"><%= @draft_count %></strong>
+  </article>
+  <article class="stat-card">
+    <p>All Articles</p>
+    <strong><%= @post_count %></strong>
+  </article>
+  <article class="stat-card">
+    <p>Active Categories</p>
+    <strong style="color: var(--accent);"><%= @category_count %></strong>
+  </article>
+</div>
+
+<section class="admin-panel">
+  <div class="admin-panel-head">
+    <h2 style="margin: 0; font-size: 1.35rem;">Recent Articles</h2>
+    <%= link_to "View all articles →", admin_posts_path, class: "text-link" %>
+  </div>
+  <% if @recent_posts.any? %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Slug</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_posts.each do |post| %>
+          <tr>
+            <td>
+              <%= link_to post.title, edit_admin_post_path(post), style: "font-weight: 600; color: var(--text-primary);" %>
+              <% if post.featured? %>
+                <span class="chip chip-quiet" style="margin-left: 0.5rem; font-size: 0.75rem;">★ Featured</span>
+              <% end %>
+            </td>
+            <td><span class="chip chip-quiet"><%= post.category.name %></span></td>
+            <td>
+              <span class="status <%= post.published? ? "is-live" : "is-draft" %>">
+                <%= post.published? ? "● Published" : "○ Draft" %>
+              </span>
+            </td>
+            <td class="mono" style="color: var(--text-muted);">/<%= post.slug %></td>
+            <td class="table-actions">
+              <%= link_to "Edit", edit_admin_post_path(post), class: "btn btn-ghost btn-small" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty">
+      <p>No posts written yet.</p>
+      <%= link_to "Write your first post", new_admin_post_path, class: "btn btn-primary btn-small", style: "margin-top: 0.8rem;" %>
+    </div>
+  <% end %>
+</section>

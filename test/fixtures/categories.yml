@@ -1,0 +1,9 @@
+ruby:
+  name: Ruby
+  slug: ruby
+  description: Language, runtime, and the Rails stack.
+
+craft:
+  name: Craft
+  slug: craft
+  description: Process, taste, and how work gets made.

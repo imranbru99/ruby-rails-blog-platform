@@ -1,0 +1,48 @@
+<% content_for :title, "Categories · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow"><span class="eyebrow-pill">Taxonomy</span></p>
+    <h1 style="margin: 0;">Categories</h1>
+  </div>
+  <%= link_to "+ New Category", new_admin_category_path, class: "btn btn-accent" %>
+</div>
+
+<section class="admin-panel">
+  <% if @categories.any? %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Category Name</th>
+          <th>URL Slug</th>
+          <th>Article Count</th>
+          <th style="text-align: right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td>
+              <%= link_to category.name, edit_admin_category_path(category), style: "font-weight: 600; color: var(--text-primary);" %>
+            </td>
+            <td class="mono">
+              <%= link_to "/category/#{category.slug}", category_path(category.slug), target: "_blank", rel: "noopener", class: "text-link", style: "font-size: 0.85rem;" %>
+            </td>
+            <td>
+              <span class="chip chip-quiet"><%= pluralize(category.posts.count, "article") %></span>
+            </td>
+            <td class="table-actions">
+              <%= link_to "Edit", edit_admin_category_path(category), class: "btn btn-ghost btn-small" %>
+              <%= button_to "Delete", admin_category_path(category), method: :delete, class: "btn-text-danger", form: { data: { turbo_confirm: "Delete this category and its associations?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty">
+      <p>No categories created yet.</p>
+      <%= link_to "Create your first category", new_admin_category_path, class: "btn btn-primary btn-small", style: "margin-top: 0.8rem;" %>
+    </div>
+  <% end %>
+</section>

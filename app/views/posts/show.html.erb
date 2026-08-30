@@ -1,0 +1,97 @@
+<% content_for :title, page_title(@post.title) %>
+<% content_for :description, @post.excerpt %>
+
+<div data-controller="reading-progress share">
+  <div class="reading-progress-bar" data-reading-progress-target="bar" role="progressbar" aria-label="Reading progress"></div>
+
+  <article class="article">
+    <header class="article-header wrap-narrow">
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <%= link_to "Journal", root_path %>
+        <span aria-hidden="true">/</span>
+        <%= link_to @post.category.name, category_path(@post.category.slug) %>
+      </nav>
+
+      <p style="margin-bottom: 1rem;">
+        <%= link_to @post.category.name, category_path(@post.category.slug), class: "chip" %>
+      </p>
+
+      <h1><%= @post.title %></h1>
+      <p class="article-excerpt"><%= @post.excerpt %></p>
+
+      <div class="article-meta-bar">
+        <div class="meta">
+          <span>By <strong>Meridian Editorial</strong></span>
+          <span class="meta-divider"></span>
+          <time datetime="<%= (@post.published_at || @post.created_at).iso8601 %>"><%= published_on(@post) %></time>
+          <span class="meta-divider"></span>
+          <span>⏱ <%= pluralize(@post.reading_minutes, "min") %> read</span>
+        </div>
+
+        <div class="article-share-group">
+          <button type="button" 
+                  class="btn btn-ghost btn-small" 
+                  data-share-target="button" 
+                  data-action="click->share#copy" 
+                  data-url="<%= request.original_url %>" 
+                  aria-label="Copy article link to clipboard">
+            🔗 <span data-share-target="label">Copy link</span>
+          </button>
+          
+          <button type="button" 
+                  class="btn btn-ghost btn-small" 
+                  data-action="click->share#share" 
+                  data-title="<%= @post.title %>" 
+                  data-url="<%= request.original_url %>" 
+                  aria-label="Share article">
+            📤 Share
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <% if @post.cover_image.attached? %>
+      <figure class="article-cover wrap">
+        <%= image_tag @post.cover_image, alt: @post.title %>
+      </figure>
+    <% end %>
+
+    <div class="article-body wrap-narrow trix-content">
+      <%= @post.body %>
+
+      <div class="author-box">
+        <div class="author-avatar" aria-hidden="true">M</div>
+        <div class="author-info">
+          <h4>Meridian Journal</h4>
+          <p>Essays exploring modern software engineering, system craft, design aesthetics, and architecture that stands the test of time.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <% if @related.any? %>
+    <section class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Related writing</p>
+          <h2>More in <%= @post.category.name %></h2>
+        </div>
+        <%= link_to "View all #{@post.category.name} →", category_path(@post.category.slug), class: "text-link" %>
+      </div>
+      <div class="post-grid">
+        <% @related.each do |post| %>
+          <%= render "shared/post_card", post: post %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <button type="button" 
+          class="back-to-top-btn" 
+          data-reading-progress-target="backToTop" 
+          data-action="click->reading-progress#scrollToTop" 
+          aria-label="Back to top of article" 
+          title="Back to top">
+    ↑
+  </button>
+</div>

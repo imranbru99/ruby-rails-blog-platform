@@ -1,0 +1,62 @@
+<%= form_with model: [:admin, post], class: "form form-stack" do |f| %>
+  <% if post.errors.any? %>
+    <div class="form-errors" role="alert">
+      <p style="margin-top: 0; font-weight: 600;">Please fix <%= pluralize(post.errors.count, "error") %> before saving:</p>
+      <ul style="margin-bottom: 0; padding-left: 1.2rem;">
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, "Article Title" %>
+    <%= f.text_field :title, required: true, placeholder: "e.g. Building Resilient Systems with Ruby" %>
+  </div>
+
+  <div class="field-grid">
+    <div class="field">
+      <%= f.label :slug, "Custom URL Slug (e.g. /my-slug)" %>
+      <%= f.text_field :slug, placeholder: "auto-generated-from-title" %>
+    </div>
+    <div class="field">
+      <%= f.label :category_id, "Shelf / Category" %>
+      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "Select a category" }, { required: true } %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :excerpt, "Short Excerpt / Meta Description" %>
+    <%= f.text_area :excerpt, rows: 3, required: true, placeholder: "A compelling summary of the essay (1-2 sentences)..." %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "Essay Content (Rich Text)" %>
+    <%= f.rich_text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cover_image, "Cover Image (Optional)" %>
+    <%= f.file_field :cover_image, accept: "image/*" %>
+    <% if post.cover_image.attached? %>
+      <p class="muted" style="font-size: 0.88rem; margin-top: 0.3rem;">✓ Current cover image is attached and active.</p>
+    <% end %>
+  </div>
+
+  <div class="check-row" style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+    <label class="check">
+      <%= f.check_box :published %>
+      <span>🚀 Published (Visible on public site)</span>
+    </label>
+    <label class="check">
+      <%= f.check_box :featured %>
+      <span>★ Featured (Highlighted in hero section)</span>
+    </label>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit (post.persisted? ? "Save Changes" : "Publish Article"), class: "btn btn-accent" %>
+    <%= link_to "Cancel", admin_posts_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

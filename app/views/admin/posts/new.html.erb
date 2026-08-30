@@ -1,0 +1,12 @@
+<% content_for :title, "New post · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Content</p>
+    <h1>New post</h1>
+  </div>
+</div>
+
+<section class="admin-panel">
+  <%= render "form", post: @post %>
+</section>

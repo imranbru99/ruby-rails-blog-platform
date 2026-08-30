@@ -1,0 +1,35 @@
+<% content_for :title, page_title(@category.name) %>
+<% content_for :description, @category.description.presence || "Essays in #{@category.name}." %>
+
+<section class="page-hero">
+  <div class="wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <%= link_to "Journal", root_path %>
+      <span aria-hidden="true">/</span>
+      <span>Categories</span>
+    </nav>
+    <p class="eyebrow"><span class="eyebrow-pill">Topic Collection</span></p>
+    <h1><%= @category.name %></h1>
+    <% if @category.description.present? %>
+      <p class="lede"><%= @category.description %></p>
+    <% end %>
+    <p class="muted mono" style="margin-top: 1rem;">
+      <%= pluralize(@posts.count, "published essay") %> in this shelf
+    </p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <% if @posts.any? %>
+    <div class="post-grid">
+      <% @posts.each do |post| %>
+        <%= render "shared/post_card", post: post %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty">
+      <p>Nothing published in this category yet.</p>
+      <%= link_to "← Back to all essays", root_path, class: "btn btn-ghost btn-small", style: "margin-top: 1rem;" %>
+    </div>
+  <% end %>
+</section>

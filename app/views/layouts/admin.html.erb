@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <title><%= content_for(:title) || "Admin · #{site_name}" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="admin-body">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <a class="admin-brand" href="<%= admin_root_path %>">
+          <span class="brand-logo" aria-hidden="true">M</span>
+          <span>
+            <strong style="font-size: 1.15rem;"><%= site_name %></strong>
+            <small>Editorial Suite</small>
+          </span>
+        </a>
+        <nav class="admin-nav" aria-label="Admin Navigation">
+          <%= link_to admin_root_path, class: [ "admin-nav-link", admin_nav_class(admin_root_path) ] do %>
+            <span>📊</span> <span>Dashboard</span>
+          <% end %>
+          <%= link_to admin_posts_path, class: [ "admin-nav-link", admin_nav_class(admin_posts_path) ] do %>
+            <span>📝</span> <span>Posts & Essays</span>
+          <% end %>
+          <%= link_to admin_categories_path, class: [ "admin-nav-link", admin_nav_class(admin_categories_path) ] do %>
+            <span>🏷️</span> <span>Categories</span>
+          <% end %>
+          <%= link_to root_path, class: "admin-nav-link", target: "_blank", rel: "noopener", style: "margin-top: 1rem;" do %>
+            <span>↗️</span> <span>View Live Site</span>
+          <% end %>
+        </nav>
+        <div class="admin-sidebar-foot">
+          <p class="admin-user">👤 <%= current_admin.email %></p>
+          <%= button_to "Sign out", admin_logout_path, method: :delete, class: "btn btn-ghost btn-small btn-block" %>
+        </div>
+      </aside>
+      <div class="admin-main">
+        <% if notice %><p class="flash flash-notice" role="status"><span aria-hidden="true">✓</span> <%= notice %></p><% end %>
+        <% if alert %><p class="flash flash-alert" role="alert"><span aria-hidden="true">⚠️</span> <%= alert %></p><% end %>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
