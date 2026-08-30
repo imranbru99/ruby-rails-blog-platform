@@ -1,0 +1,52 @@
+<% content_for :title, page_title("About") %>
+
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="wrap-narrow hero-content">
+    <p class="eyebrow"><span class="eyebrow-pill">Editorial Manifesto</span></p>
+    <h1>A quiet sanctuary to write, reflect, and build in public.</h1>
+    <p class="lede">
+      <%= site_name %> is an independent engineering and design publication built on Ruby on Rails.
+      Clean typography, fast page loads, and zero distractions.
+    </p>
+  </div>
+</section>
+
+<section class="wrap-narrow section about-prose">
+  <p>
+    The web was built for reading. Somewhere along the way, publishing stacks became over-engineered, 
+    weighed down with megabytes of JavaScript, trackers, and popup notifications.
+  </p>
+  
+  <p>
+    <strong><%= site_name %></strong> returns to first principles: server-rendered HTML, semantic markup, 
+    crisp type hierarchy, and persistent clean URLs like <code>/why-ruby-still-feels-like-home</code>.
+  </p>
+
+  <dl class="stat-row">
+    <div class="stat-box">
+      <dt>Published Essays</dt>
+      <dd><%= @post_count %></dd>
+    </div>
+    <div class="stat-box">
+      <dt>Curated Topics</dt>
+      <dd><%= @category_count %></dd>
+    </div>
+  </dl>
+
+  <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2rem; margin: 3rem 0; box-shadow: var(--shadow-sm);">
+    <h3 style="margin-top: 0;">Our Publication Pillars</h3>
+    <ul style="padding-left: 1.2rem; margin-bottom: 0; color: var(--text-secondary);">
+      <li style="margin-bottom: 0.8rem;"><strong>Longevity:</strong> Slugs and category paths remain stable across decades.</li>
+      <li style="margin-bottom: 0.8rem;"><strong>Taste & Craft:</strong> Thoughtful typesetting, comfortable line lengths, and distraction-free layouts.</li>
+      <li style="margin-bottom: 0.8rem;"><strong>Simplicity:</strong> Built with standard Rails conventions, Hotwire Turbo, and pure CSS.</li>
+    </ul>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <%= link_to "Explore all essays", root_path, class: "btn btn-primary" %>
+    <% unless admin_signed_in? %>
+      <%= link_to "Editor login", admin_login_path, class: "btn btn-ghost", style: "margin-left: 0.8rem;" %>
+    <% end %>
+  </div>
+</section>

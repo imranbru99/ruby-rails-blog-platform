@@ -1,0 +1,57 @@
+<% content_for :title, "Posts · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow"><span class="eyebrow-pill">Content Management</span></p>
+    <h1 style="margin: 0;">Posts & Essays</h1>
+  </div>
+  <%= link_to "+ New Post", new_admin_post_path, class: "btn btn-accent" %>
+</div>
+
+<section class="admin-panel">
+  <% if @posts.any? %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>URL Slug</th>
+          <th style="text-align: right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td>
+              <%= link_to post.title, edit_admin_post_path(post), style: "font-weight: 600; color: var(--text-primary);" %>
+              <% if post.featured? %><span class="chip chip-quiet" style="margin-left: 0.5rem; font-size: 0.75rem;">★ Featured</span><% end %>
+            </td>
+            <td><span class="chip chip-quiet"><%= post.category.name %></span></td>
+            <td>
+              <span class="status <%= post.published? ? "is-live" : "is-draft" %>">
+                <%= post.published? ? "● Published" : "○ Draft" %>
+              </span>
+            </td>
+            <td class="mono" style="color: var(--text-muted);">
+              <% if post.published? %>
+                <%= link_to "/#{post.slug}", post_path(post), target: "_blank", rel: "noopener", class: "text-link", style: "font-size: 0.85rem;" %>
+              <% else %>
+                /<%= post.slug %>
+              <% end %>
+            </td>
+            <td class="table-actions">
+              <%= link_to "Edit", edit_admin_post_path(post), class: "btn btn-ghost btn-small" %>
+              <%= button_to "Delete", admin_post_path(post), method: :delete, class: "btn-text-danger", form: { data: { turbo_confirm: "Are you sure you want to delete this post?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty">
+      <p>No posts found in the database.</p>
+      <%= link_to "Write the first essay", new_admin_post_path, class: "btn btn-primary btn-small", style: "margin-top: 0.8rem;" %>
+    </div>
+  <% end %>
+</section>

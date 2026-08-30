@@ -1,0 +1,19 @@
+<article class="post-card">
+  <div>
+    <div class="meta" style="margin-bottom: 0.8rem;">
+      <%= link_to post.category.name, category_path(post.category.slug), class: "chip" %>
+      <span class="meta-divider"></span>
+      <span><%= published_on(post) %></span>
+    </div>
+    <h3><%= link_to post.title, post_path(post) %></h3>
+    <p class="excerpt"><%= post.excerpt %></p>
+  </div>
+  
+  <div class="post-card-footer">
+    <span class="muted" style="font-size: 0.86rem;">⏱ <%= pluralize(post.reading_minutes, "min") %> read</span>
+    <%= link_to post_path(post), class: "text-link" do %>
+      <span>Read story</span>
+      <span aria-hidden="true">→</span>
+    <% end %>
+  </div>
+</article>

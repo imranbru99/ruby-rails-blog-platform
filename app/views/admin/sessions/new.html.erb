@@ -1,0 +1,26 @@
+<%= form_with url: admin_login_path, local: true, class: "form form-stack" do |f| %>
+  <div class="field">
+    <%= label_tag :email, "Email Address" %>
+    <%= email_field_tag :email, params[:email] || "admin@meridian.test", required: true, autocomplete: "username", autofocus: true, placeholder: "you@domain.com" %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :password, "Password" %>
+    <%= password_field_tag :password, "admin12345", required: true, autocomplete: "current-password" %>
+  </div>
+  
+  <div style="margin-top: 0.5rem;">
+    <%= submit_tag "Sign In to Editorial Suite", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<div style="margin-top: 1.5rem; padding: 0.9rem; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); text-align: center;">
+  <p class="muted auth-hint" style="margin: 0; font-size: 0.84rem;">
+    🔑 <strong>Seed Credentials:</strong><br>
+    <code>admin@meridian.test</code> / <code>admin12345</code>
+  </p>
+</div>
+
+<div style="margin-top: 1.2rem; text-align: center;">
+  <%= link_to "← Back to Public Journal", root_path, class: "text-link", style: "font-size: 0.88rem;" %>
+</div>

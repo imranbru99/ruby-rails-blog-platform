@@ -1,0 +1,12 @@
+<% content_for :title, "New category · Admin" %>
+
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Taxonomy</p>
+    <h1>New category</h1>
+  </div>
+</div>
+
+<section class="admin-panel">
+  <%= render "form", category: @category %>
+</section>

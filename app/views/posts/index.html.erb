@@ -1,0 +1,103 @@
+<% content_for :title, page_title("Journal") %>
+<% content_for :description, site_tagline %>
+
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="wrap hero-content">
+    <p class="eyebrow"><span class="eyebrow-pill">✨ Curated Engineering & Craft</span></p>
+    <h1>Writing for people who build things that last.</h1>
+    <p class="lede"><%= site_tagline %></p>
+  </div>
+</section>
+
+<% if @featured %>
+  <section class="featured wrap">
+    <article class="featured-card">
+      <div class="featured-copy">
+        <p class="meta">
+          <span class="chip" style="background: var(--accent); color: #fff; border-color: var(--accent);">★ Featured Essay</span>
+          <%= link_to @featured.category.name, category_path(@featured.category.slug), class: "chip chip-quiet" %>
+          <span class="meta-divider"></span>
+          <span><%= published_on(@featured) %></span>
+          <span class="meta-divider"></span>
+          <span>⏱ <%= pluralize(@featured.reading_minutes, "min") %> read</span>
+        </p>
+        <h2><%= link_to @featured.title, post_path(@featured) %></h2>
+        <p class="excerpt"><%= @featured.excerpt %></p>
+        <%= link_to post_path(@featured), class: "btn btn-primary" do %>
+          <span>Read essay</span>
+          <span aria-hidden="true">→</span>
+        <% end %>
+      </div>
+    </article>
+  </section>
+<% end %>
+
+<section class="wrap section" data-controller="search">
+  <div class="section-head">
+    <div>
+      <h2>Latest essays</h2>
+      <p class="muted">Thoughts, deep dives, and architectural notes.</p>
+    </div>
+    <div class="muted mono" data-search-target="count">
+      <%= pluralize(@posts.count, "essay") %>
+    </div>
+  </div>
+
+  <div class="filter-toolbar">
+    <div class="category-pills-bar">
+      <button type="button" 
+              class="category-filter-pill is-active" 
+              data-search-target="categoryPill" 
+              data-category="all" 
+              data-action="click->search#selectCategory">
+        All Topics
+      </button>
+      <% @nav_categories.each do |category| %>
+        <button type="button" 
+                class="category-filter-pill" 
+                data-search-target="categoryPill" 
+                data-category="<%= category.slug %>" 
+                data-action="click->search#selectCategory">
+          <%= category.name %>
+        </button>
+      <% end %>
+    </div>
+
+    <div class="search-box-wrapper">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input type="text" 
+             class="search-input" 
+             placeholder="Search essays..." 
+             data-search-target="input" 
+             data-action="input->search#filter" 
+             aria-label="Search essays">
+    </div>
+  </div>
+
+  <% if @posts.any? %>
+    <div class="post-grid">
+      <% @posts.each do |post| %>
+        <div data-search-target="item" 
+             data-title="<%= post.title %>" 
+             data-excerpt="<%= post.excerpt %>" 
+             data-category="<%= post.category.slug %>">
+          <%= render "shared/post_card", post: post %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="empty" data-search-target="empty" style="display: none; margin-top: 2rem;">
+      <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No matching essays found.</p>
+      <p class="muted">Try adjusting your search terms or category filter.</p>
+      <button type="button" class="btn btn-ghost btn-small" data-action="click->search#clear" style="margin-top: 1rem;">
+        Clear filters
+      </button>
+    </div>
+  <% else %>
+    <div class="empty">
+      <p>No published essays yet.</p>
+      <p><%= link_to "Open the admin dashboard", admin_login_path, class: "btn btn-primary btn-small", style: "margin-top: 1rem;" %></p>
+    </div>
+  <% end %>
+</section>

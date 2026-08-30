@@ -1,0 +1,9 @@
+welcome_body:
+  record: welcome (Post)
+  name: body
+  body: <p>Opening notes on writing in public.</p>
+
+quiet_tools_body:
+  record: quiet_tools (Post)
+  name: body
+  body: <p>Software that stays out of the way.</p>

@@ -1,0 +1,39 @@
+<header class="site-header" data-controller="nav">
+  <div class="wrap header-inner">
+    <a class="brand-wrapper" href="<%= root_path %>">
+      <span class="brand-logo" aria-hidden="true">M</span>
+      <span class="wordmark"><%= site_name %></span>
+    </a>
+    
+    <nav id="site-nav" class="site-nav" data-nav-target="menu" aria-label="Primary">
+      <%= nav_link_to "Journal", root_path %>
+      <% @nav_categories.first(5).each do |category| %>
+        <%= nav_link_to category.name, category_path(category.slug) %>
+      <% end %>
+      <%= nav_link_to "About", about_path %>
+      <% if admin_signed_in? %>
+        <%= link_to "Admin", admin_root_path, class: "nav-link", style: "color: var(--accent); font-weight: 600;" %>
+      <% end %>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" 
+              class="theme-toggle-btn" 
+              data-theme-target="button" 
+              data-action="click->theme#toggle" 
+              aria-label="Toggle light or dark theme"
+              title="Toggle theme">
+        <span data-theme-target="icon">🌙</span>
+      </button>
+
+      <button type="button" 
+              class="nav-toggle" 
+              data-nav-target="toggle" 
+              data-action="nav#toggle" 
+              aria-expanded="false" 
+              aria-controls="site-nav">
+        Menu ☰
+      </button>
+    </div>
+  </div>
+</header>

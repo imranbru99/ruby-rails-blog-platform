@@ -1,0 +1,40 @@
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brand-wrapper" style="margin-bottom: 0.8rem;">
+        <span class="brand-logo" style="width: 1.8rem; height: 1.8rem; font-size: 1rem;" aria-hidden="true">M</span>
+        <span class="wordmark" style="font-size: 1.35rem;"><%= site_name %></span>
+      </div>
+      <p class="muted" style="font-size: 0.94rem; max-width: 24rem;"><%= site_tagline %></p>
+    </div>
+    
+    <div>
+      <p class="footer-label">Curated Topics</p>
+      <ul class="footer-list">
+        <% @nav_categories.each do |category| %>
+          <li><%= link_to category.name, category_path(category.slug) %></li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <div>
+      <p class="footer-label">Navigation</p>
+      <ul class="footer-list">
+        <li><%= link_to "Home / Journal", root_path %></li>
+        <li><%= link_to "About the Journal", about_path %></li>
+        <% if admin_signed_in? %>
+          <li><%= link_to "Admin Dashboard", admin_root_path %></li>
+        <% else %>
+          <li><%= link_to "Editor Portal", admin_login_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="wrap footer-base">
+    <p class="muted" style="margin: 0;">© <%= Date.current.year %> <%= site_name %> Journal. Handcrafted with Ruby on Rails & Hotwire.</p>
+    <div class="muted" style="font-size: 0.85rem;">
+      <span>Designed for longevity & clarity</span>
+    </div>
+  </div>
+</footer>

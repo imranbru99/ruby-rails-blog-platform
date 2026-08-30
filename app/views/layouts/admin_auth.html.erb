@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign in · <%= site_name %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        var theme = localStorage.getItem("meridian_theme") || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="auth-body">
+    <main class="auth-card">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <span class="brand-logo" style="width: 2rem; height: 2rem; font-size: 1.1rem;" aria-hidden="true">M</span>
+        <a class="brand wordmark" href="<%= root_path %>" style="font-size: 1.5rem;"><%= site_name %></a>
+      </div>
+      <p class="auth-kicker">Editor & Author Portal</p>
+      <% if notice %><p class="flash flash-notice" role="status"><span aria-hidden="true">✓</span> <%= notice %></p><% end %>
+      <% if alert %><p class="flash flash-alert" role="alert"><span aria-hidden="true">⚠️</span> <%= alert %></p><% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

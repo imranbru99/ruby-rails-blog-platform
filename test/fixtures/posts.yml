@@ -1,0 +1,17 @@
+welcome:
+  title: Welcome to Meridian
+  slug: welcome-to-meridian
+  excerpt: Opening notes on writing in public.
+  published: true
+  published_at: 2026-08-01 10:00:00
+  featured: true
+  category: ruby
+
+quiet_tools:
+  title: Quiet tools
+  slug: quiet-tools
+  excerpt: Software that stays out of the way.
+  published: false
+  published_at:
+  featured: false
+  category: craft
